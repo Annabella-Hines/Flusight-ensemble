@@ -31,12 +31,15 @@ jobs:
         run: |
           install.packages("pak", repos = "https://cran.rstudio.com")
           pak::pkg_install(c(
-            "tidyverse", "lubridate", "readr", "stringr", "yaml",
+            "tidyverse", "lubridate", "readr", "stringr", "yaml", "readr",
+            "reshape2", "ggforce", "distfromq", "gridExtra",
             "reichlab/hubEnsembles",
             "reichlab/hubUtils",
             "reichlab/hubData",
             "reichlab/hubAdmin"))
         shell: Rscript {0}
+      - name: Clone FluSight forecast hub
+        run: git clone https://github.com/cdcepi/FluSight-forecast-hub.git
       - name: Generate FluSight-ensemble csv file
         run:  Rscript generate_flu_ensemble.R
       - name: Generate 6-week ensemble csv file
