@@ -16,8 +16,11 @@ library(yaml)
 current_ref_date <- lubridate::ceiling_date(Sys.Date(), "week") - days(1)
 task_id_cols <- c("reference_date", "location", "horizon", "target", "target_end_date")
   
-out_path <- paste0("C:/Users/",Sys.info()["user"],"/Desktop/GitHub/Flusight-ensemble")
-hub_path <- paste0("C:/Users/",Sys.info()["user"],"/Desktop/GitHub/FluSight-forecast-hub")
+#out_path <- paste0("C:/Users/",Sys.info()["user"],"/Desktop/GitHub/Flusight-ensemble")
+#hub_path <- paste0("C:/Users/",Sys.info()["user"],"/Desktop/GitHub/FluSight-forecast-hub")
+
+out_path <- "."
+hub_path <- paste0("external/FluSight-forecast-hub")
 hub_con <- connect_hub(hub_path) 
 current_forecasts <- hub_con |>
   dplyr::filter(
@@ -29,7 +32,8 @@ current_forecasts <- hub_con |>
 
 # if(!file.exists(paste0(out_path, "models-to-include-in-ensemble-", current_ref_date, ".csv"))){
    file_names = list.files(path = paste0(hub_path, "/model-metadata"))
-   all_metadata = file_names[!(file_names %in% c("FluSight-baseline", "FluSight-ensemble", "FluSight-lop_norm")) &
+   all_metadata = file_names[!(file_names %in% c("FluSight-baseline", "FluSight-ensemble", "FluSight-lop_norm", "FluSight-base_seasonal",
+                                                "FluSight-trained_mean", "FluSight-trained_med")) &
                             !grepl(paste0(".md", collapse = "|"), file_names)]# %>%
 
    
